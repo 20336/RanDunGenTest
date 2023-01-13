@@ -12,7 +12,9 @@ public class RoomSpawner : MonoBehaviour
 
     private RoomTemplates templates;
     private int rand;
-    private bool spawned = false;
+    public bool spawned = false;
+
+    public float waitTime = 4f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +23,6 @@ public class RoomSpawner : MonoBehaviour
         Invoke("Spawn", 0.1f);
     }
 
-    // Update is called once per frame
     void Spawn()
     {
         if(spawned == false)
@@ -56,8 +57,9 @@ public class RoomSpawner : MonoBehaviour
         {
             if (other.GetComponent<RoomSpawner>().spawned == false && this.spawned == false)
             {
-                Instantiate(templates.closedRoom, transform.position, Quaternion.identity);
-                Destroy(gameObject);
+
+                Instantiate(templates.closedRoom, transform.position, templates.closedRoom.transform.rotation);
+                Destroy(this.gameObject);
             }
             spawned = true;
         }
